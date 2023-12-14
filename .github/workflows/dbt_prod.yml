@@ -25,14 +25,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (first attempt, ignore errors)
+      - name: Install dependencies (first attempt)
         continue-on-error: true
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install -r requirements.txt
-
-      - name: Install dependencies (second attempt)
-        run: |
           pip3 install -r requirements.txt
 
       - name: Install dbt packages
@@ -40,10 +36,9 @@ jobs:
         working-directory: ./
 
       - name: Run the models
-        run: dbt run --profiles-dir ./ --profile github_actions --target prod
+        run: dbt run --profiles-dir ./ --profile github_actions --target dev
         working-directory: ./
 
       - name: Run tests
-        run: dbt test --profiles-dir ./ --profile github_actions --target prod
+        run: dbt test --profiles-dir ./ --profile github_actions --target dev
         working-directory: ./
-
