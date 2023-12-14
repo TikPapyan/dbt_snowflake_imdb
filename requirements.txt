@@ -1,4 +1,4 @@
-agate==1.9.0
+agate
 asn1crypto==1.5.1
 attrs==23.1.0
 Babel==2.14.0
@@ -14,7 +14,7 @@ dbt-semantic-interfaces==0.4.2
 dbt-snowflake==1.7.1
 filelock==3.13.1
 idna==3.6
-importlib-metadata==7.0.0
+importlib-metadata
 importlib-resources==6.1.1
 isodate==0.6.1
 jaraco.classes==3.3.0
