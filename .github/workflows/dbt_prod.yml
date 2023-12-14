@@ -5,10 +5,10 @@ on:
     branches: [ master ]
 
 env:
-  DBT_PROFILE_TARGET: dev
-  DBT_PROFILE_ACCOUNT: ${{ secrets.DBT_PROFILE_ACCOUNT }}
-  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
-  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+  DBT_TARGET: dev
+  DBT_ACCOUNT: ${{ secrets.DBT_CCCOUNT }}
+  DBT_USER: ${{ secrets.DBT_USER }}
+  DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
 
 jobs:
   dbt_run:
@@ -36,9 +36,9 @@ jobs:
         working-directory: ./
 
       - name: Run the models
-        run: dbt run --profiles-dir ./ --profile github_actions --target dev
+        run: dbt run
         working-directory: ./
 
       - name: Run tests
-        run: dbt test --profiles-dir ./ --profile github_actions --target dev
+        run: dbt test 
         working-directory: ./
