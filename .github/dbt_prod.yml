@@ -1,0 +1,44 @@
+name: dbt production run on push branches to main
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DBT_PROFILE_TARGET: prod
+  DBT_PROFILE_ACCOUNT: ${{ secrets.DBT_PROFILE_ACCOUNT }}
+  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
+  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+
+jobs:
+  dbt_run:
+    name: dbt refresh and test on push branches to main
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Install dbt packages
+        run: dbt deps
+        working-directory: ./
+
+      - name: Run the models
+        run: dbt run --profiles-dir ./ --profile github_actions --target prod
+        working-directory: ./
+
+      - name: Run tests
+        run: dbt test --profiles-dir ./ --profile github_actions --target prod
+        working-directory: ./
+
