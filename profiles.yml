@@ -1,0 +1,13 @@
+dbt_project:
+  outputs:
+    dev:
+      account: to65952.eu-north-1.aws
+      database: FIVETRAN_DATABASE
+      password: password
+      role: FIVETRAN_ROLE
+      schema: GOOGLE_DRIVE
+      threads: 2
+      type: snowflake
+      user: FIVETRAN_USER
+      warehouse: FIVETRAN_WAREHOUSE
+  target: dev
