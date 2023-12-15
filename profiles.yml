@@ -1,13 +1,14 @@
 dbt_project:
   outputs:
     dev:
-      account: to65952.eu-north-1.aws
+      account: "{{ env_var('DBT_ACCOUNT') }}"
       database: FIVETRAN_DATABASE
-      password: password
+      password: "{{ env_var('DBT_PASSWORD') }}"
       role: FIVETRAN_ROLE
       schema: GOOGLE_DRIVE
       threads: 2
       type: snowflake
-      user: FIVETRAN_USER
+      user: "{{ env_var('DBT_USER') }}"
       warehouse: FIVETRAN_WAREHOUSE
   target: dev
+
