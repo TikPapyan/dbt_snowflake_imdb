@@ -1,7 +1,7 @@
-# Data Analytics and Visualization Project
+# Data Pipeline Project for Movie Analytics
 
 ## Introduction
-This project is centered around data analytics and visualization, with a focus on processing and analyzing movie data from the IMDb dataset. The goal is to extract meaningful insights and trends from the data, such as average ratings, counts per year, and high earnings, and to present these insights through effective data visualizations. This project encompasses the entire data pipeline, from data ingestion and transformation to analysis and visualization.
+This project showcases the construction of an end-to-end data pipeline, emphasizing the integration of diverse technologies to facilitate data analytics and visualization focused on movie data from the IMDb dataset.
 
 ## Technologies Used
 - **IMDb Dataset**: Serves as the primary data source, offering a comprehensive collection of movie data.
@@ -11,7 +11,7 @@ This project is centered around data analytics and visualization, with a focus o
 - **dbt (data build tool)**: Utilized for transforming data within Snowflake. It allows for version-controlled and modular transformations.
 - **GitHub Actions**: Automates the CI/CD pipeline, ensuring consistent and error-free deployment of dbt models.
 - **Docker**: Provides a consistent and isolated environment for running the dbt project, enhancing portability and scalability.
-- **Hex**: Used for advanced data analytics and visualization. Hex allows for creating interactive notebooks that connect directly to Snowflake and dbt models.
+- **Hex**: Used for data analytics and visualization. Hex allows for creating interactive notebooks that connect directly to Snowflake and dbt models.
 
 This diverse set of technologies enables a comprehensive approach to data analytics, from initial data ingestion to in-depth analysis and visual presentation.
 
