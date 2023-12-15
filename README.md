@@ -157,4 +157,100 @@ This automation ensures that every change pushed to the repository undergoes a t
 It is crucial to securely handle sensitive information like Snowflake credentials. Therefore, GitHub Secrets were created to store the **DBT_ACCOUNT**, **DBT_USER**, and **DBT_PASSWORD**. These secrets are referenced in the workflow, providing secure access to the necessary credentials without exposing them in the code.
 
 Below is a screenshot of secrets creation:
-   ![GitHub Secrets Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/github-secret.pngg)
+   ![GitHub Secrets Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/github-secret.png)
+
+## Dockerization
+
+### Dockerfile Creation
+The project is containerized using Docker, which provides a consistent and isolated environment, ensuring that the dbt project runs smoothly across different setups. The `Dockerfile` is structured as follows:
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /dbt
+RUN pip install dbt-snowflake
+COPY . .
+RUN dbt deps
+ENV DBT_PROFILES_DIR /dbt
+CMD ["dbt", "run"]
+```
+
+This Dockerfile performs the following actions:
+
+ - Starts from a slim Python 3.11 base image.
+ - Sets the working directory to **/dbt** within the container.
+ - Installs **dbt-snowflake** using pip, enabling dbt to interact with Snowflake.
+ - Copies all the files from the current directory (the dbt project files) into the container.
+ - Runs dbt **deps** to install dbt dependencies.
+ - Sets the **DBT_PROFILES_DIR** environment variable, pointing dbt to the profiles directory.
+ - Specifies the default command (**dbt run**) to execute when the container starts.
+
+### Building and Running the Docker Container
+
+#### Building the Docker Image
+
+To build the Docker image from the Dockerfile, the following command is used:
+
+```
+docker build -t dbt-project .
+```
+
+This command creates a Docker image named **dbt-project** based on the instructions in the Dockerfile.
+
+#### Running the Docker Container
+Once the image is built, the dbt project can be run inside a Docker container using the command:
+
+```
+docker run dbt-project
+```
+
+This command starts a container from the **dbt-project** image and executes the default command (**dbt run**), running the dbt models as defined in the project.
+
+By using Docker, we ensure that our dbt project operates in a controlled environment, mitigating issues related to varying local setups and dependencies.
+
+## Data Visualization with Hex
+
+### Hex Integration
+For the data visualization aspect of our project, we integrated Hex, an advanced data analytics and visualization platform, with our Snowflake database and dbt models. The integration process involved:
+
+1. **Connecting Hex to Snowflake**:
+   - In Hex, we used the dedicated Snowflake connector to establish a direct connection to our Snowflake database.
+   - This required entering credentials for Snowflake, including account details, user name, and password.
+
+2. **Enabling dbt Integration**:
+   - We also enabled dbt integration within Hex to directly utilize our dbt models for analysis and visualization.
+   - This involved providing specific dbt Cloud settings, such as the version, access URL, environment ID, and a service token for secure access.
+
+Through these integrations, Hex can now access both the raw data in Snowflake and the transformed data via dbt models, providing a comprehensive environment for data analysis and visualization.
+
+### Hex Notebook
+A Hex notebook was created to visually explore and analyze the movie data. The notebook serves as an interactive tool where SQL queries can be run against the Snowflake data, and the results are visualized using Hex's powerful graphical capabilities. 
+
+- **Hex Notebook Link**: [View the Hex Notebook](https://app.hex.tech/64aedd26-c085-4914-9bef-aa829a4e3d6d/app/dd1aa85a-8888-44c5-a684-b48a52d3a6ee/latest)
+
+In this notebook, various visualizations were crafted to uncover insights from the IMDb dataset, such as trends over time, ratings distributions, and genre comparisons. The interactive nature of Hex allows for dynamic exploration and deeper understanding of the data, making it an invaluable tool in our data analysis arsenal.
+
+## Conclusion
+
+### Project Summary
+This project successfully established a comprehensive data pipeline integrating various technologies to analyze and visualize movie data from the IMDb dataset. Key achievements include:
+
+- **Data Integration**: Seamlessly syncing data from Google Drive to Snowflake via Fivetran.
+- **Data Transformation**: Effectively using dbt for data modeling and transformation within Snowflake.
+- **Automation and Version Control**: Implementing GitHub Actions for continuous integration, ensuring reliable and consistent code updates.
+- **Containerization**: Utilizing Docker to create a consistent environment for running dbt models.
+- **Advanced Visualization**: Integrating Hex for dynamic data visualization and analysis, leveraging both raw and transformed data.
+
+The project demonstrates how different technologies can be combined to create a robust data analytics pipeline, from data ingestion and transformation to insightful visualization and analysis.
+
+### Future Directions
+To further enhance the project's capabilities and effectiveness, several improvements and extensions can be considered:
+
+1. **Expand Dataset**: Incorporate additional data sources or more extensive IMDb data to enrich the analysis.
+2. **Advanced dbt Features**: Explore more complex dbt features like incremental models, tests, and macros to enhance data transformation.
+3. **Real-Time Data Integration**: Implement real-time data syncing for more up-to-date analysis.
+4. **Extended Visualizations**: Develop more complex visualizations in Hex to uncover deeper insights.
+5. **Machine Learning Integration**: Integrate machine learning models for predictive analytics and trend forecasting.
+6. **User Interface for Interactivity**: Create a user-friendly interface or dashboard that allows non-technical users to interact with the data and visualizations.
+
+These future directions aim to expand the project's scope, increase its analytical power, and make it more accessible to a broader range of users.
+
