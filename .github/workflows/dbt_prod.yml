@@ -6,7 +6,7 @@ on:
 
 env:
   DBT_TARGET: dev
-  DBT_ACCOUNT: ${{ secrets.DBT_CCCOUNT }}
+  DBT_ACCOUNT: ${{ secrets.DBT_ACCCOUNT }}
   DBT_USER: ${{ secrets.DBT_USER }}
   DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
 
