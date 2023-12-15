@@ -5,7 +5,6 @@ on:
     branches: [ master ]
 
 env:
-  DBT_TARGET: dev
   DBT_ACCOUNT: ${{ secrets.DBT_ACCCOUNT }}
   DBT_USER: ${{ secrets.DBT_USER }}
   DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
@@ -25,8 +24,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (first attempt)
-        continue-on-error: true
+      - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip3 install -r requirements.txt
@@ -35,10 +33,10 @@ jobs:
         run: dbt deps
         working-directory: ./
 
-      - name: Run the models
-        run: dbt run
-        working-directory: ./
+      - name: Run dbt
+        run: dbt run --profiles-dir .
+        env:
+          DBT_ACCOUNT: ${{ secrets.DBT_ACCOUNT }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
 
-      - name: Run tests
-        run: dbt test 
-        working-directory: ./

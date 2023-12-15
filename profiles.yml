@@ -10,5 +10,4 @@ dbt_project:
       type: snowflake
       user: "{{ env_var('DBT_USER') }}"
       warehouse: FIVETRAN_WAREHOUSE
-  target: dev
 
