@@ -34,7 +34,7 @@ jobs:
         working-directory: ./
 
       - name: Run dbt
-        run: dbt run --profiles-dir .
+        run: dbt run --profiles-dir . --target dev
         env:
           DBT_ACCOUNT: ${{ secrets.DBT_ACCOUNT }}
           DBT_USER: ${{ secrets.DBT_USER }}
