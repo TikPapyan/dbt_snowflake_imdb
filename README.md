@@ -79,3 +79,82 @@ Below is a screenshot of the updated `dbt_project.yml`:
 
 This process established a robust foundation for developing, testing, and running dbt models, thereby enabling effective data transformations within our Snowflake data warehouse.
 
+## Version Control with GitHub
+
+### Repository Setup
+The project is version-controlled using GitHub, which facilitates collaboration, version tracking, and code management. The process of setting up the repository on GitHub involved the following steps:
+
+1. **Creating a Repository**: A new repository was created on GitHub to host the project files.
+2. **Local Git Setup**: The local dbt project directory was initialized as a Git repository.
+3. **Committing Files**: All relevant project files were added and committed to the local Git repository.
+4. **Pushing to GitHub**: The committed changes were pushed to the GitHub repository using `git push -u origin master`.
+
+### Continuous Integration with GitHub Actions
+
+#### Workflow Creation
+The `.github/workflows/dbt_prod.yml` file was created to define the GitHub Actions workflow for continuous integration. This workflow is triggered on every push to the `master` branch. The file includes:
+
+```yaml
+name: dbt production run on push branches to main
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  DBT_TARGET: dev
+  DBT_ACCOUNT: ${{ secrets.DBT_CCCOUNT }}
+  DBT_USER: ${{ secrets.DBT_USER }}
+  DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+
+jobs:
+  dbt_run:
+    name: dbt refresh and test on push branches to main
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (first attempt)
+        continue-on-error: true
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.txt
+
+      - name: Install dbt packages
+        run: dbt deps
+        working-directory: ./
+
+      - name: Run the models
+        run: dbt run
+        working-directory: ./
+
+      - name: Run tests
+        run: dbt test 
+        working-directory: ./
+```
+
+The workflow automates the following tasks:
+
+- Checks out the code from the repository.
+- Sets up the Python environment.
+- Installs dependencies.
+- Installs dbt packages.
+- Runs dbt models.
+- Executes dbt tests.
+
+This automation ensures that every change pushed to the repository undergoes a thorough check, maintaining the integrity and reliability of the codebase.
+
+#### Creating Secrets for Security
+
+It is crucial to securely handle sensitive information like Snowflake credentials. Therefore, GitHub Secrets were created to store the **DBT_ACCOUNT**, **DBT_USER**, and **DBT_PASSWORD**. These secrets are referenced in the workflow, providing secure access to the necessary credentials without exposing them in the code.
+
+Below is a screenshot of secrets creation:
+   ![GitHub Secrets Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/github-secret.pngg)
