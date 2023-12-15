@@ -28,6 +28,9 @@ The IMDb dataset utilized in this project is the "IMDb TOP 1000 WITH DESCRIPTION
 #### Configuring Snowflake
 The initial step in setting up our data warehouse involves configuring Snowflake to handle our data needs. This process includes setting up roles, users, and warehouses. Below is an overview of the Snowflake script used:
 
+Below is a screenshot of the Snowflake script used:
+![Snowflake Script Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/snowflake_script.png)
+
 ```sql
 begin;
 
@@ -43,6 +46,7 @@ Creating user roles and permissions is crucial in Snowflake to ensure secure and
 
 To connect Snowflake as a destination to Fivetran, specific settings and credentials are configured in Fivetran. This integration enables the automated transfer of data from Google Drive (where the IMDb dataset is stored) to Snowflake. Detailed connection settings include specifying the Snowflake role, user, warehouse, database, and other necessary parameters to establish a successful connection.
 
-
+*Below is a screenshot of the Fivetran to Snowflake connection setup:*
+![Fivetran Connection Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/fivetran_connection.png)
 
 With these configurations, Snowflake is ready to receive and store data from our primary data source, paving the way for the next steps in data transformation and analysis.
