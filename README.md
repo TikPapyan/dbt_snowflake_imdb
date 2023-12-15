@@ -35,11 +35,6 @@ Creating user roles and permissions is crucial in Snowflake to ensure secure and
 #### Connecting Snowflake to Fivetran
 To connect Snowflake as a destination to Fivetran, specific settings and credentials are configured in Fivetran. This integration enables the automated transfer of data from Google Drive (where the IMDb dataset is stored) to Snowflake. Detailed connection settings include specifying the Snowflake role, user, warehouse, database, and other necessary parameters to establish a successful connection.
 
-Below is a screenshot of the Fivetran to Snowflake connection setup:
-![Fivetran Connection Screenshot](https://github.com/TikPapyan/dbt_snowflake_imdb/blob/master/screenshots/fivetran_connection.png)
-
-With these configurations, Snowflake is ready to receive and store data from our primary data source, paving the way for the next steps in data transformation and analysis.
-
 ## Local Environment and dbt Setup
 
 ### Setting up the dbt Environment
